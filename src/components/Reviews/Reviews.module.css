@@ -1,0 +1,27 @@
+.reviewsContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.error {
+  font-size: 20px;
+  font-weight: 700;
+  color: brown;
+}
+.subTitle {
+  margin-bottom: 8px;
+}
+.reviewsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.info {
+  font-style: italic;
+  margin-bottom: 4px;
+}
+.infoEl {
+  font-weight: 500;
+  text-decoration: underline;
+}
