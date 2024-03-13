@@ -1,7 +1,6 @@
 import { useParams, useLocation, Link, Outlet } from 'react-router-dom';
-import { useState, useRef, useEffect, Suspense } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { getMovieById } from '../../services/apiId';
-import Loader from 'components/Loader/Loader';
 import Info from '../../components/Info/Info';
 import css from './MovieDetails.module.css';
 
@@ -52,9 +51,8 @@ function MovieDetails() {
               </Link>
             </li>
           </ul>
-          <Suspense fallback={<Loader />}>
-            <Outlet />
-          </Suspense>
+
+          <Outlet />
         </>
       )}
     </main>
