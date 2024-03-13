@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import getTrending from '../services/apiTrending';
+import getTrending from '../../services/apiTrending';
+import MoviesList from 'components/MoviesList/MoviesList';
 import css from './Home.module.css';
 
 function Home() {
   const [movies, setMovies] = useState([]);
-  const location = useLocation();
 
   useEffect(() => {
     getTrending()
@@ -20,17 +19,7 @@ function Home() {
   return (
     <main className={css.pageContainer}>
       <h1>Trending today</h1>
-      <ul className={css.trendingList}>
-        {movies.map(({ title, id }) => {
-          return (
-            <li className={css.link} key={id}>
-              <Link to={`movies/${id}`} state={{ from: location }}>
-                {title}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+      <MoviesList movies={movies} />
     </main>
   );
 }

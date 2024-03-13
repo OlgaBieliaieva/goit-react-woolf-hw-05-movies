@@ -1,31 +1,30 @@
 import { useParams, useLocation, Link, Outlet } from 'react-router-dom';
 import { useState, useRef, useEffect, Suspense } from 'react';
+import { getMovieById } from '../../services/apiId';
 import Loader from 'components/Loader/Loader';
-import { getMovieById } from '../services/apiId';
-import Info from '../components/Info/Info';
+import Info from '../../components/Info/Info';
 import css from './MovieDetails.module.css';
 
 function MovieDetails() {
   const { movieId } = useParams();
   const location = useLocation();
   const backLinkLocationRef = useRef(location.state?.from ?? '/');
-  const query = Number(movieId);
   const [movie, setMovie] = useState({});
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!query) {
+    if (!movieId) {
       return;
     }
 
-    getMovieById(query)
+    getMovieById(movieId)
       .then(response => {
         setMovie(response.data);
       })
       .catch(error => {
         setError(error.message);
       });
-  }, [query]);
+  }, [movieId]);
 
   return (
     <main className={css.pageContainer}>

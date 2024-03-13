@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams, useLocation, Link } from 'react-router-dom';
-import getMovieByName from '../services/apiName';
+import { useSearchParams } from 'react-router-dom';
+import SearchForm from 'components/SearchForm/SearchForm';
+import MoviesList from 'components/MoviesList/MoviesList';
+import getMovieByName from '../../services/apiName';
 import css from './Movies.module.css';
 
 function Movies() {
@@ -9,7 +11,6 @@ function Movies() {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState('');
   const [status, setStatus] = useState('');
-  const location = useLocation();
 
   useEffect(() => {
     if (movie_title.length === 0) {
@@ -35,36 +36,12 @@ function Movies() {
 
   return (
     <main className={css.pageContainer}>
-      <form className={css.search} onSubmit={handleFormSubmit}>
-        <label>
-          <input
-            className={css.searchField}
-            type="text"
-            placeholder="start searching"
-            autoComplete="off"
-          />
-        </label>
-        <button className={css.searchButton} type="submit">
-          Search
-        </button>
-      </form>
+      <SearchForm formSubmit={handleFormSubmit} />
       {error && <p className={css.error}>Results not found</p>}
       {status === 200 && movies.length === 0 && (
         <p className={css.error}>Results not found</p>
       )}
-      {movies.length > 0 && (
-        <ul className={css.moviesList}>
-          {movies.map(({ title, id }) => {
-            return (
-              <li className={css.link} key={id}>
-                <Link to={`${id}`} state={{ from: location }}>
-                  {title}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      )}
+      {movies.length > 0 && <MoviesList movies={movies} />}
     </main>
   );
 }

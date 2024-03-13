@@ -6,17 +6,16 @@ import css from './Cast.module.css';
 
 function Cast() {
   const { movieId } = useParams();
-  const query = Number(movieId);
   const [cast, setCast] = useState([]);
   const [status, setStatus] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!query) {
+    if (!movieId) {
       return;
     }
 
-    getCastById(query)
+    getCastById(movieId)
       .then(response => {
         setCast(response.data.cast);
         setStatus(response.status);
@@ -24,7 +23,7 @@ function Cast() {
       .catch(error => {
         setError(error.message);
       });
-  }, [query]);
+  }, [movieId]);
 
   return (
     <div className={css.castContainer}>
@@ -35,15 +34,17 @@ function Cast() {
           {cast.map(({ profile_path, name, character }, index) => {
             return (
               <li key={index}>
-                {profile_path !== null && (
-                  <img
-                    src={`https://image.tmdb.org/t/p/w200/${profile_path}`}
-                    alt={name}
-                  />
-                )}
-                {profile_path === null && (
-                  <img src={defaultImg} alt={name} width={200} height={300} />
-                )}
+                <img
+                  src={`${
+                    profile_path !== null
+                      ? `https://image.tmdb.org/t/p/w200/${profile_path}`
+                      : defaultImg
+                  }`}
+                  alt={name}
+                  width={200}
+                  height={300}
+                />
+
                 <p className={css.info}>{name}</p>
                 <p className={css.info}>
                   <span className={css.infoEl}>Character:</span> {character}

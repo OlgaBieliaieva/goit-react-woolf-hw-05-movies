@@ -1,0 +1,9 @@
+.pageContainer {
+  padding: 15px;
+}
+
+.error {
+  font-size: 20px;
+  font-weight: 700;
+  color: brown;
+}
